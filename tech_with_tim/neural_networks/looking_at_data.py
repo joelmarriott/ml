@@ -20,5 +20,21 @@ class_names = [
     'Ankle boot'
     ]
 
-plt.imshow(train_images[7])
-plt.show()
+train_images = train_images/255.0
+test_images = test_images/255.0
+
+model = keras.Sequential([
+    keras.layers.Flatten(input_shape=(28,28)),
+    keras.layers.Dense(128, activation='relu'),
+    keras.layers.Dense(10, activation='softmax')
+])
+
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+
+model.fit(train_images, train_labels, epochs=5)
+
+test_loss, test_acc = model.evaluate(test_images, test_labels)
+
+print('Tested accuracy:', test_acc)
