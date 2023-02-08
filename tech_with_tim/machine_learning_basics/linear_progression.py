@@ -5,10 +5,14 @@ from sklearn import linear_model
 from sklearn.utils import shuffle
 import matplotlib.pyplot as pyplot
 import pickle
+import os
 from matplotlib import style
 
 
-data = pd.read_csv('./data/student-mat.csv', sep=';')
+data = pd.read_csv(os.path.join(os.path.realpath(os.path.dirname(__file__)),
+                                'data',
+                                'student-mat.csv'),
+                   sep=';')
 
 data = data[
     ['G1', 'G2', 'G3', 'studytime', 'failures', 'absences']
@@ -31,11 +35,17 @@ for current_attempt in range(30):
 
     if accuracy > best_accuracy:
         best_accuracy = accuracy
-        with open('./data/studentmodel.pickle', 'wb') as f:
+        with open(os.path.join(os.path.realpath(os.path.dirname(__file__)),
+                               'data',
+                               'studentmodel.pickle'), 
+                  'wb') as f:
             pickle.dump(linear, f)
 print('Best accuracy: ', best_accuracy)
     
-pickle_in = open('./data/studentmodel.pickle', 'rb')
+pickle_in = open(os.path.join(os.path.realpath(os.path.dirname(__file__)),
+                              'data',
+                              'studentmodel.pickle'),
+                 'rb')
 linear = pickle.load(pickle_in)
 
 print('Co-efficient: \n', linear.coef_)
