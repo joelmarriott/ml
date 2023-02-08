@@ -48,7 +48,7 @@ fitModel = model.fit(x_train,
 results = model.evaluate(test_data, test_labels)
 
 test_review = test_data[0]
-predict = model.predict([test_review])
+predict = model.predict(np.array([test_review]))
 print('Review: ')
 print(decode_review(test_review))
 print('Prediction:', predict[0])
